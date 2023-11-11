@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5718600104054595232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5718600104054595234}
+  - component: {fileID: 5718600104054595235}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5718600104054595234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718600104054595232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.43248, y: 0.9615531, z: 3.796504}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5718600104054595235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5718600104054595232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25bd08bc52e8ec4bb3920a3d71c0c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _barriersPrefabs:
+  - {fileID: 3335265608667514223, guid: 88eefef689c0cda46bbe6b7d37a302bb, type: 3}
+  - {fileID: 6320651692014218544, guid: f568e2ea38113bd4e99404df3f14bf70, type: 3}
+  - {fileID: 7100903278682009523, guid: 5a07371fb9cadba4a8fa823d41cb1515, type: 3}
+  - {fileID: 5921543953821054205, guid: 74aaad17843553744819bff3f5f2af29, type: 3}
+  - {fileID: 7377194893125257557, guid: 4e1bed9d63c74d140a7986566132994f, type: 3}
+  _planePrefab: {fileID: 6741831610036106611, guid: 8ba41ad653cab0d4dbfec2ea8db47ac0,
+    type: 3}
+  _portalPrefab: {fileID: 4797510668010376226, guid: cbbd5fe2ac5e4be4caacfc18e1661c0b,
+    type: 3}
+  _startOffset: 15
+  _finishOffset: 10
+  _signPer10Unit: 20
