@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3335265608667514223}
   - component: {fileID: 3157637414919983873}
   m_Layer: 0
-  m_Name: Barrier
+  m_Name: BarrierR1
   m_TagString: Sign
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

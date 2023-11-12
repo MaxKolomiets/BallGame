@@ -5,35 +5,7 @@ using System.Threading.Tasks;
 using System;
 using UnityEngine.UI;
 using TMPro; 
-public class BallExplotion {
-   private float _ballRadius;
-   private Vector3 _ballPos;
-   private const float  ExplotionMultiplier = 1f;
 
-    public BallExplotion(Ball ball) {
-        _ballRadius = ball.transform.position.x / 2;
-        _ballPos = ball.transform.position;
-    }
-    public void Explotion() 
-    {
-        Dictionary<Vector2Int, Barrier> newList = new();
-        foreach (var obj in LevelController.instance.AllBarrier)
-        {
-            if (Vector3.Distance(obj.Value.transform.position, _ballPos) <= _ballRadius + ExplotionMultiplier)
-            {
-                obj.Value.DeleteBall();
-            }
-            else
-            {
-                newList.Add(obj.Key, obj.Value);
-            }
-        }
-        LevelController.instance.SetNewBarrierList(newList);
-        onExplotion?.Invoke();
-    }
-
-    public static Action onExplotion;
-}
 
 
 public class Ball : MonoBehaviour
@@ -51,6 +23,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         transform.position = _player.transform.position + new Vector3(0,0,_player.transform.localScale.z/2+ _unitOffset);
+        
     }
 
     public void SetPlayer(Player player) {
@@ -60,6 +33,7 @@ public class Ball : MonoBehaviour
         transform.localScale += new Vector3(time, time, time);
     }
     public async void EndIncrease() {
+        AudioController.instance.PlaySound(AudioType.BallThrow);
         await MoveBall();
     }
     public void OnCollisionEnter(Collision collision)
@@ -89,6 +63,7 @@ public class Ball : MonoBehaviour
         }
         BallExplotion explotion = new(this);
         explotion.Explotion();
+        AudioController.instance.PlaySound(AudioType.BallExplotion);
        var particle = Instantiate(_particlePrefab);
         particle.transform.position = transform.position;
         Destroy(this);

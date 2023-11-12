@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Ball _ballPrefab;
     [SerializeField] private float _playerMoveDuration = 1.5f;
-    private Ball _ball;
+    [SerializeField] private float _rotateSpeed = 5;
     private Vector3 CalculateNextPlayerStep() {
         Vector2 minPos = transform.position - transform.localScale / 2;
         Vector2 maxPos = transform.position + transform.localScale / 2 + new Vector3(0, 0, LevelGenerator.LevelLenth);
@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
             
             return new(5, LevelGenerator.LevelLenth + 5);
         }
-        //return signsFrontPlayer.Count>0 ? signNearPlayer: new(5,LevelGenerator.LevelLenth+5);
 
     }
     private void OnTriggerEnter(Collider other)
@@ -60,11 +59,11 @@ public class Player : MonoBehaviour
         {
             float controlVal = elapsedTime / _playerMoveDuration;
             transform.position = Vector3.Lerp(startPos, targetPos, controlVal);
-            transform.Rotate(1, 0, 0);
+            transform.Rotate(_rotateSpeed, 0, 0);
             elapsedTime += Time.deltaTime;
             await Task.Yield();
         }
-        if (!GameState.IsCurrentStateIsWin())
+        if (!GameState.IsCurrentStateIsWinOrLose())
         {
             GameState.SetWaitingState();
         }
@@ -79,7 +78,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        if (transform.localScale.x < 0)
+        if (transform.localScale.x < 0&&!GameState.IsCurrentStateIsWinOrLose())
         {
             onEndGame(false);
         }
@@ -98,47 +97,6 @@ public class Player : MonoBehaviour
             GameState.CurrentState.FinishTap();
         }
     }
-    //void Update()
-    //{
-    //    if (transform.localScale.x < 0)
-    //    {
-    //        onEndGame(false);
-    //    }
-
-    //    if (Input.touchCount > 0 || Input.GetMouseButton(0))
-    //    {
-    //        if (Input.touchCount > 0)
-    //        {
-    //            Touch touch = Input.GetTouch(0);
-    //            switch (touch.phase)
-    //            {
-    //                case TouchPhase.Began:
-    //                    break;
-    //                case TouchPhase.Stationary:
-    //                case TouchPhase.Moved:
-    //                    break;
-    //                case TouchPhase.Ended:
-    //                    break;
-    //            }
-    //        }
-    //        if (Input.GetMouseButtonDown(0))
-    //        {
-    //            _ball = Instantiate(_ballPrefab);
-    //            _ball.SetPlayer(this);
-    //        }
-    //        if (Input.GetMouseButton(0))
-    //        {
-    //            var time = Time.deltaTime;
-    //            _ball.IncreaseSize(time);
-    //            transform.localScale -= new Vector3(time, time, time);
-    //        }
-
-    //    }
-    //    if (Input.GetMouseButtonUp(0))
-    //    {
-    //        _ball.EndIncrease();
-    //    }
-    //}
     public static Action <bool>onEndGame;
 
     private void OnEnable()

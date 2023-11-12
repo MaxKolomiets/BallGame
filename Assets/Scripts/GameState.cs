@@ -8,8 +8,6 @@ public interface IGameState  {
     public void StartTap(Player player);
     public void Press(Player player);
     public void FinishTap();
-    public void Start();
-    public void Exit();
 }
 public enum GameStateEnum
 {
@@ -18,19 +16,12 @@ public enum GameStateEnum
 
 public class WinOrLoseState : IGameState
 {
-    public void Exit()
-    {
-    }
 
     public void FinishTap()
     {
     }
 
     public void Press(Player player)
-    {
-    }
-
-    public void Start()
     {
     }
 
@@ -40,10 +31,6 @@ public class WinOrLoseState : IGameState
 }
 public class BallMoveState : IGameState
 {
-    public void Exit()
-    {
-    }
-
     public void FinishTap()
     {
     }
@@ -52,21 +39,12 @@ public class BallMoveState : IGameState
     {
     }
 
-    public void Start()
-    {
-      
-    }
-
     public void StartTap(Player player)
     {
     }
 }
 public class BallThrowState : IGameState
 {
-    public void Exit()
-    {
-    }
-
     public void FinishTap()
     {
         GameState.SetBallMoveState();
@@ -78,20 +56,12 @@ public class BallThrowState : IGameState
         LevelController.instance.IncreaseBallSize();
         LevelController.instance.DecreasePlayerSize(player);
     }
-
-    public void Start()
-    {
-    }
-
     public void StartTap(Player player)
     {
     }
 }
 public class WaitingState : IGameState
 {
-    public void Exit()
-    {
-    }
 
     public void FinishTap()
     {
@@ -99,10 +69,6 @@ public class WaitingState : IGameState
     }
 
     public void Press(Player player)
-    {
-    }
-
-    public void Start()
     {
     }
 
@@ -134,12 +100,11 @@ public static class GameState
     {
         if (_currentState != null)
         {
-            _currentState.Exit();
         }
         _currentState = newState;
-        _currentState.Start();
+
     }
-    public static bool IsCurrentStateIsWin() {
+    public static bool IsCurrentStateIsWinOrLose() {
         return _currentState == GetState<WinOrLoseState>();
     }
 

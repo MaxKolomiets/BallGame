@@ -63,7 +63,7 @@ public class LevelController : MonoBehaviour
         _allBarrier = newBarrierList;
     }
     public void RestartGame() {
-        if (GameState.IsCurrentStateIsWin()) {
+        if (GameState.IsCurrentStateIsWinOrLose()) {
             Destroy(_player);
             Destroy(_levelGenerator.gameObject);
             Destroy(_canvas.gameObject);
@@ -76,5 +76,31 @@ public class LevelController : MonoBehaviour
             }
             InitializeManager();
         }
+    }
+
+    public void Update()
+    {
+        if (_player) {
+            _canvas.SetPlayerSize(_player.transform.localScale.x);
+        }
+    }
+    private void EndGame(bool win)
+    {
+        //GameState.SetWinOrLoseState();
+        AudioController.instance.PlaySound(win ? AudioType.Win : AudioType.Lose);
+        int currentSize = (int) (20*_player.transform.localScale.x);
+        if (RatingLoader.IsNewRecord(currentSize))
+        {
+            _canvas.SetNewRecord();
+        }
+    }
+
+    private void OnEnable()
+    {
+        Player.onEndGame += EndGame;
+    }
+    private void OnDisable()
+    {
+        Player.onEndGame -= EndGame;
     }
 }

@@ -50,6 +50,11 @@ MonoBehaviour:
   - {fileID: 7100903278682009523, guid: 5a07371fb9cadba4a8fa823d41cb1515, type: 3}
   - {fileID: 5921543953821054205, guid: 74aaad17843553744819bff3f5f2af29, type: 3}
   - {fileID: 7377194893125257557, guid: 4e1bed9d63c74d140a7986566132994f, type: 3}
+  - {fileID: 3335265608667514223, guid: 3cab0fd757c73304d9007795ee2b07cf, type: 3}
+  - {fileID: 6320651692014218544, guid: c8ffa6c30af177148a5b3a46034a06cb, type: 3}
+  - {fileID: 7100903278682009523, guid: a2b8ee30ae65d0c4f90538bcf59f0b1c, type: 3}
+  - {fileID: 5921543953821054205, guid: 4322781d69d51e3468f012a5f707c58d, type: 3}
+  - {fileID: 7377194893125257557, guid: faf6722051989754f9c0b66417312aa0, type: 3}
   _planePrefab: {fileID: 6741831610036106611, guid: 8ba41ad653cab0d4dbfec2ea8db47ac0,
     type: 3}
   _portalPrefab: {fileID: 4797510668010376226, guid: cbbd5fe2ac5e4be4caacfc18e1661c0b,

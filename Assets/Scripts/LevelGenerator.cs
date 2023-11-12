@@ -11,7 +11,7 @@ public class LevelGenerator : MonoBehaviour
     private Plane _plane;
     private GameObject _portal;
     public static int LevelLenth => _levelLenth;
-    [SerializeField] private static int _levelLenth = 40;
+    [SerializeField] private static int _levelLenth = 80;
     [SerializeField] private int _startOffset = 15;
     [SerializeField] private int _finishOffset = 10;
     [SerializeField] private int _signPer10Unit = 20;
