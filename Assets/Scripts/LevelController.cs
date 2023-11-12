@@ -7,8 +7,15 @@ public class LevelController : MonoBehaviour
     [SerializeField] private LevelGenerator _levelGeneratorPrefab;
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private CameraController _cameraController;
+    [SerializeField] private CanvasController _canvasPrefab;
+    private LevelGenerator _levelGenerator;
     private Player _player;
+    private CanvasController _canvas; 
     public static LevelController instance = null;
+
+    [SerializeField] private Ball _ballPrefab;
+    private Ball _ball;
+
     public Dictionary<Vector2Int, Barrier> AllBarrier => _allBarrier;
     private Dictionary<Vector2Int, Barrier> _allBarrier = new();
 
@@ -25,16 +32,49 @@ public class LevelController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         InitializeManager();
     }
+    public void CreateBall(Player player) {
+        _ball = Instantiate(_ballPrefab);
+        _ball.SetPlayer(player);
+    }
+    public void IncreaseBallSize() 
+    {
+        var time = Time.deltaTime;
+        _ball.IncreaseSize(time);
+    }
+    public void DecreasePlayerSize(Player player) {
+        var time = Time.deltaTime;
+        player.transform.localScale -= new Vector3(time, time, time);
+    }
+    public void StartMoveBall() {
+        _ball.EndIncrease();
+    }
+
     private void InitializeManager()
     {
-        var levelGenerator = Instantiate(_levelGeneratorPrefab);
-        _allBarrier = levelGenerator.CreateLevel();
+        _levelGenerator = Instantiate(_levelGeneratorPrefab);
+        _allBarrier = _levelGenerator.CreateLevel();
         _player = Instantiate(_playerPrefab);
         _cameraController.SetPlayer(_player);
+        _canvas = Instantiate(_canvasPrefab);
+        GameState.SetDefoultValue();
     }
     public void SetNewBarrierList(Dictionary<Vector2Int, Barrier> newBarrierList)
     {
         _allBarrier = newBarrierList;
     }
-
+    public void RestartGame() {
+        if (GameState.IsCurrentStateIsWin()) {
+            Destroy(_player);
+            Destroy(_levelGenerator.gameObject);
+            Destroy(_canvas.gameObject);
+            if (_ball != null) {
+                Destroy(_ball.gameObject);
+            }
+            foreach (var item in _allBarrier)
+            {
+                Destroy(item.Value.gameObject);
+            }
+            InitializeManager();
+        }
+    }
 }

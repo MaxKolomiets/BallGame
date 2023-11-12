@@ -5,7 +5,7 @@ using System;
 
 
 public interface IGameState  {
-    public void StartTap();
+    public void StartTap(Player player);
     public void Press(Player player);
     public void FinishTap();
     public void Start();
@@ -20,108 +20,96 @@ public class WinOrLoseState : IGameState
 {
     public void Exit()
     {
-        throw new NotImplementedException();
     }
 
     public void FinishTap()
     {
-        throw new NotImplementedException();
     }
 
     public void Press(Player player)
     {
-        throw new NotImplementedException();
     }
 
     public void Start()
     {
-        throw new NotImplementedException();
     }
 
-    public void StartTap()
+    public void StartTap(Player player)
     {
-        throw new NotImplementedException();
     }
 }
 public class BallMoveState : IGameState
 {
     public void Exit()
     {
-        throw new NotImplementedException();
     }
 
     public void FinishTap()
     {
-        throw new NotImplementedException();
     }
 
     public void Press(Player player)
     {
-        throw new NotImplementedException();
     }
 
     public void Start()
     {
-        throw new NotImplementedException();
+      
     }
 
-    public void StartTap()
+    public void StartTap(Player player)
     {
-        throw new NotImplementedException();
     }
 }
 public class BallThrowState : IGameState
 {
     public void Exit()
     {
-        throw new NotImplementedException();
     }
 
     public void FinishTap()
     {
-        throw new NotImplementedException();
+        GameState.SetBallMoveState();
+        LevelController.instance.StartMoveBall();
     }
 
     public void Press(Player player)
     {
-        throw new NotImplementedException();
+        LevelController.instance.IncreaseBallSize();
+        LevelController.instance.DecreasePlayerSize(player);
     }
 
     public void Start()
     {
-        throw new NotImplementedException();
     }
 
-    public void StartTap()
+    public void StartTap(Player player)
     {
-        throw new NotImplementedException();
     }
 }
 public class WaitingState : IGameState
 {
     public void Exit()
     {
-        throw new NotImplementedException();
     }
 
     public void FinishTap()
     {
-        throw new NotImplementedException();
+       
     }
 
     public void Press(Player player)
     {
-        throw new NotImplementedException();
     }
 
     public void Start()
     {
-        throw new NotImplementedException();
     }
 
-    public void StartTap()
+    public void StartTap(Player player)
     {
-        throw new NotImplementedException();
+        LevelController.instance.CreateBall(player);
+        GameState.SetBallThrowState();
     }
 }
 
@@ -132,7 +120,10 @@ public static class GameState
 
     private static IGameState _currentState;
 
-    private static void InitStateMap() {
+    public static void SetDefoultValue() {
+        SetWaitingState();
+    }
+     static  GameState() {
         _gameStateMap[typeof(WinOrLoseState)] = new WinOrLoseState();
         _gameStateMap[typeof(BallMoveState)] = new BallMoveState();
         _gameStateMap[typeof(BallThrowState)] = new BallThrowState();
@@ -147,6 +138,9 @@ public static class GameState
         }
         _currentState = newState;
         _currentState.Start();
+    }
+    public static bool IsCurrentStateIsWin() {
+        return _currentState == GetState<WinOrLoseState>();
     }
 
     private static IGameState GetState<T>() where T : IGameState

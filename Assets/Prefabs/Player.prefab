@@ -113,7 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballPrefab: {fileID: 1079492533212922983, guid: 8946ce5c4f1858b4da716506879ce21d,
     type: 3}
-  _playerMoveDuration: 1.5
+  _playerMoveDuration: 1.68
+  _testText: {fileID: 2335676527608268119, guid: 9ee5f235efc222d4f960e6952c37d754,
+    type: 3}
 --- !u!54 &6121204452504268697
 Rigidbody:
   m_ObjectHideFlags: 0

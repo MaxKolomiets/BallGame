@@ -7,11 +7,13 @@ public class CanvasController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _sizeText;
     [SerializeField] private TextMeshProUGUI _wilLoseText;
+    [SerializeField] public TextMeshProUGUI _testText;
+    [SerializeField] private Button _playAgainButton;
 
     // Start is called before thTextMeshProUGUIe first frame update
     void Start()
     {
-        
+        _playAgainButton.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,6 +23,8 @@ public class CanvasController : MonoBehaviour
     }
     private void WinOrLose(bool win)
     {
+        GameState.SetWinOrLoseState();
+        _playAgainButton.gameObject.SetActive(true);
         _wilLoseText.text = win ? "Win" : "Lose";
 
     }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
-
+using UnityEngine.UI;
+using TMPro; 
 public class BallExplotion {
    private float _ballRadius;
    private Vector3 _ballPos;
@@ -13,7 +14,7 @@ public class BallExplotion {
         _ballRadius = ball.transform.position.x / 2;
         _ballPos = ball.transform.position;
     }
-    public void Explotion()
+    public void Explotion() 
     {
         Dictionary<Vector2Int, Barrier> newList = new();
         foreach (var obj in LevelController.instance.AllBarrier)
@@ -37,6 +38,8 @@ public class BallExplotion {
 
 public class Ball : MonoBehaviour
 {
+    [SerializeField] private ParticleExplotion _particlePrefab;
+
     private Player _player;
     private float _unitOffset = 3f;
     private Vector3 _startPos;
@@ -86,7 +89,11 @@ public class Ball : MonoBehaviour
         }
         BallExplotion explotion = new(this);
         explotion.Explotion();
+       var particle = Instantiate(_particlePrefab);
+        particle.transform.position = transform.position;
         Destroy(this);
+        await Task.Delay(700);
+        Destroy(particle.gameObject);
     }
     public void OnDestroy()
     {

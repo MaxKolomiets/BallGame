@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 using System.Threading.Tasks;
 using System;
 
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Portal")
         {
+            Debug.Log("win");
             onEndGame?.Invoke(true);
         }
     }
@@ -58,68 +60,85 @@ public class Player : MonoBehaviour
         {
             float controlVal = elapsedTime / _playerMoveDuration;
             transform.position = Vector3.Lerp(startPos, targetPos, controlVal);
+            transform.Rotate(1, 0, 0);
             elapsedTime += Time.deltaTime;
             await Task.Yield();
+        }
+        if (!GameState.IsCurrentStateIsWin())
+        {
+            GameState.SetWaitingState();
         }
     }
     public async void MovePlayerNew() {
         await MovePlayer();
 
     }
+    public void OnDestroy()
+    {
+        Destroy(gameObject);
+    }
     void Update()
     {
-        if (transform.localScale.x > 0) {
+        if (transform.localScale.x < 0)
+        {
             onEndGame(false);
         }
 
-        if (Input.touchCount > 0 || Input.GetMouseButton(0))
-        {      
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        GameState.SetBallThrowState();
-                        GameState.CurrentState.StartTap();
-                        break;
-                    case TouchPhase.Stationary:
-                    case TouchPhase.Moved:
-                        var a = Time.deltaTime;
-                        transform.localScale -= new Vector3(a, a, a);
-                        GameState.CurrentState.Press(this);
-                        break;
-                    case TouchPhase.Ended:
-                        GameState.SetBallMoveState();
-                        GameState.CurrentState.FinishTap();
-                        break;
-                }
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-                _ball = Instantiate(_ballPrefab);
-                _ball.SetPlayer(this);
-                //GameState.SetBallThrowState();
-                GameState.CurrentState.StartTap();
-            }
-            if (Input.GetMouseButton(0)) 
-            {
-                GameState.CurrentState.Press(this);
-                var time = Time.deltaTime;
-                _ball.IncreaseSize(time);
-                
-                transform.localScale -= new Vector3(time, time, time);
-            }
-
-        }
-        if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
-            GameState.SetBallMoveState();
+            GameState.CurrentState.StartTap(this);
+        }
+        if (Input.GetMouseButton(0))
+        {
+            GameState.CurrentState.Press(this);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
             GameState.CurrentState.FinishTap();
-            _ball.EndIncrease();
         }
     }
+    //void Update()
+    //{
+    //    if (transform.localScale.x < 0)
+    //    {
+    //        onEndGame(false);
+    //    }
 
+    //    if (Input.touchCount > 0 || Input.GetMouseButton(0))
+    //    {
+    //        if (Input.touchCount > 0)
+    //        {
+    //            Touch touch = Input.GetTouch(0);
+    //            switch (touch.phase)
+    //            {
+    //                case TouchPhase.Began:
+    //                    break;
+    //                case TouchPhase.Stationary:
+    //                case TouchPhase.Moved:
+    //                    break;
+    //                case TouchPhase.Ended:
+    //                    break;
+    //            }
+    //        }
+    //        if (Input.GetMouseButtonDown(0))
+    //        {
+    //            _ball = Instantiate(_ballPrefab);
+    //            _ball.SetPlayer(this);
+    //        }
+    //        if (Input.GetMouseButton(0))
+    //        {
+    //            var time = Time.deltaTime;
+    //            _ball.IncreaseSize(time);
+    //            transform.localScale -= new Vector3(time, time, time);
+    //        }
+
+    //    }
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        _ball.EndIncrease();
+    //    }
+    //}
     public static Action <bool>onEndGame;
 
     private void OnEnable()
