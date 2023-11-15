@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using System;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
 
 
 
@@ -70,7 +70,9 @@ public class Ball : MonoBehaviour
         await Task.Delay(700);
         Destroy(particle.gameObject);
     }
-    public void OnDestroy()
+
+
+    public  void OnDestroy()
     {
         Destroy(GetComponent<MeshFilter>().gameObject);
     }

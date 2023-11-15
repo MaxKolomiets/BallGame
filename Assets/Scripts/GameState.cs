@@ -8,6 +8,7 @@ public interface IGameState  {
     public void StartTap(Player player);
     public void Press(Player player);
     public void FinishTap();
+    public void Start();
 }
 public enum GameStateEnum
 {
@@ -25,6 +26,10 @@ public class WinOrLoseState : IGameState
     {
     }
 
+    public void Start()
+    {
+    }
+
     public void StartTap(Player player)
     {
     }
@@ -39,6 +44,11 @@ public class BallMoveState : IGameState
     {
     }
 
+    public void Start()
+    {
+       
+    }
+
     public void StartTap(Player player)
     {
     }
@@ -49,6 +59,7 @@ public class BallThrowState : IGameState
     {
         GameState.SetBallMoveState();
         LevelController.instance.StartMoveBall();
+        LevelController.instance.DeleteBallLine(); 
     }
 
     public void Press(Player player)
@@ -56,6 +67,11 @@ public class BallThrowState : IGameState
         LevelController.instance.IncreaseBallSize();
         LevelController.instance.DecreasePlayerSize(player);
     }
+
+    public void Start()
+    { 
+    }
+
     public void StartTap(Player player)
     {
     }
@@ -72,9 +88,17 @@ public class WaitingState : IGameState
     {
     }
 
+    public void Start()
+    {
+        LevelController.instance.CreatePlayerLine();
+    }
+
     public void StartTap(Player player)
     {
         LevelController.instance.CreateBall(player);
+        LevelController.instance.CreateBallLine();
+        LevelController.instance.DeletePlayerLine();
+
         GameState.SetBallThrowState();
     }
 }
@@ -102,7 +126,7 @@ public static class GameState
         {
         }
         _currentState = newState;
-
+        _currentState.Start();
     }
     public static bool IsCurrentStateIsWinOrLose() {
         return _currentState == GetState<WinOrLoseState>();

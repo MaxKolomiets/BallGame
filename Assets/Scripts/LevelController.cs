@@ -8,10 +8,13 @@ public class LevelController : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private CanvasController _canvasPrefab;
+    [SerializeField] private BallLine _linePrefab;
     private LevelGenerator _levelGenerator;
     private Player _player;
     private CanvasController _canvas; 
     public static LevelController instance = null;
+    private BallLine _ballLine;
+    private BallLine _playerLine;
 
     [SerializeField] private Ball _ballPrefab;
     private Ball _ball;
@@ -48,7 +51,6 @@ public class LevelController : MonoBehaviour
     public void StartMoveBall() {
         _ball.EndIncrease();
     }
-
     private void InitializeManager()
     {
         _levelGenerator = Instantiate(_levelGeneratorPrefab);
@@ -70,12 +72,34 @@ public class LevelController : MonoBehaviour
             if (_ball != null) {
                 Destroy(_ball.gameObject);
             }
+            if (_ballLine) {
+                Destroy(_ballLine.gameObject);
+            }
+
             foreach (var item in _allBarrier)
             {
                 Destroy(item.Value.gameObject);
             }
             InitializeManager();
         }
+    }
+
+    public void CreateBallLine() {
+        _ballLine = Instantiate(_linePrefab);
+        _ballLine.SetBall(_ball.transform);
+    }
+    public void DeleteBallLine() {
+        Destroy(_ballLine.gameObject);
+    }
+
+    public void CreatePlayerLine()
+    {
+        _playerLine = Instantiate(_linePrefab);
+        _playerLine.SetBall(_player.transform);
+    }
+    public void DeletePlayerLine()
+    {
+        Destroy(_playerLine.gameObject);
     }
 
     public void Update()
@@ -94,6 +118,8 @@ public class LevelController : MonoBehaviour
             _canvas.SetNewRecord();
         }
     }
+
+
 
     private void OnEnable()
     {

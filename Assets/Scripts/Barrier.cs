@@ -1,38 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Barrier : MonoBehaviour
 {
     [SerializeField] GameObject _sign;
     [SerializeField] GameObject[] _based;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]  AnimationCurve _curve;
+    [SerializeField] private float destroyDuration = 0.8f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collision");
-    }
-    public void DeleteBall() {
+    public async void DeleteSign() {
+        await DestroyAnimation();
+        Destroy(gameObject);
         Destroy(this);
     }
 
-    public void OnDestroy()
+    private async Task DestroyAnimation()
     {
-        //Debug.Log("destroy");
-        Destroy(_sign);
-        Destroy(GetComponent<CapsuleCollider>());
-        foreach (var item in _based)
+        await Task.Delay(UnityEngine.Random.Range(200, 500));
+        float elapsedTime = 0;
+
+        while (elapsedTime< destroyDuration)
         {
-            Destroy(item);
+            float controlValue = elapsedTime / destroyDuration;
+            Vector3 currentPos = transform.position;
+            transform.position = new Vector3(currentPos.x, _curve.Evaluate(controlValue), currentPos.z);
+            elapsedTime += Time.deltaTime;
+            await Task.Yield();
         }
+        
+         
     }
 }

@@ -148,6 +148,49 @@ MonoBehaviour:
   _sign: {fileID: 425372232311006341}
   _based:
   - {fileID: 6740335514456875822}
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.0016591549
+      inSlope: 11.524359
+      outSlope: 11.524359
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13570207
+    - serializedVersion: 3
+      time: 0.20708388
+      value: 0.03179288
+      inSlope: -3.2196167
+      outSlope: -3.2196167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16188687
+      outWeight: 0.1503135
+    - serializedVersion: 3
+      time: 0.7791615
+      value: -1.7243143
+      inSlope: -2.4809644
+      outSlope: -2.4809644
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9999979
+      value: -1.9989858
+      inSlope: -1.2437779
+      outSlope: -1.2437779
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  destroyDuration: 0.8
 --- !u!136 &3157637414919983873
 CapsuleCollider:
   m_ObjectHideFlags: 0

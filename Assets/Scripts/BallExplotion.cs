@@ -6,20 +6,22 @@ using System;
 public class BallExplotion {
    private float _ballRadius;
    private Vector3 _ballPos;
-   private const float  ExplotionMultiplier = 1.5f;
+   private const float  ExplotionMultiplier = 3f;
 
     public BallExplotion(Ball ball) {
-        _ballRadius = ball.transform.position.x / 2;
+        _ballRadius = ball.transform.localScale.x / 2;
         _ballPos = ball.transform.position;
     }
     public void Explotion() 
     {
         Dictionary<Vector2Int, Barrier> newList = new();
+
+        Debug.Log(_ballRadius + " / " + (ExplotionMultiplier+ _ballRadius));
         foreach (var obj in LevelController.instance.AllBarrier)
         {
-            if (Vector3.Distance(obj.Value.transform.position, _ballPos) <= _ballRadius + ExplotionMultiplier)
+            if (Vector3.Distance(obj.Value.transform.position, _ballPos) <= (_ballRadius + ExplotionMultiplier))
             {
-                obj.Value.DeleteBall();
+                obj.Value.DeleteSign();
             }
             else
             {
