@@ -15,8 +15,6 @@ public class BallExplotion {
     public void Explotion() 
     {
         Dictionary<Vector2Int, Barrier> newList = new();
-
-        Debug.Log(_ballRadius + " / " + (ExplotionMultiplier+ _ballRadius));
         foreach (var obj in LevelController.instance.AllBarrier)
         {
             if (Vector3.Distance(obj.Value.transform.position, _ballPos) <= (_ballRadius + ExplotionMultiplier))
